@@ -53,6 +53,9 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.41")
     annotationProcessor("com.google.dagger:hilt-android-compiler:2.41")
 
+    // https://mvnrepository.com/artifact/com.google.android.material/material
+    runtimeOnly("com.google.android.material:material:1.5.0")
+
 
     testImplementation("junit:junit:4.+")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")

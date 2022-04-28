@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import com.github.sacsar.hellodiceroller.databinding.FragmentFirstBinding;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class FirstFragment extends Fragment {
 
   private FragmentFirstBinding binding;

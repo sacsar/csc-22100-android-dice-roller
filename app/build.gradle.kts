@@ -40,7 +40,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
     val fragment_version = "1.4.1"
     val lifecycle_version = "2.4.+"
-    val nav_version = "2.3.5"
+    val nav_version = "2.4.0"
 
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")

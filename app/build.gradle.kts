@@ -53,6 +53,13 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.41")
     annotationProcessor("com.google.dagger:hilt-android-compiler:2.41")
 
+    // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxjava
+    implementation("io.reactivex.rxjava3:rxjava:3.1.4")
+    // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxandroid -- note that rxandroid doesn't release as
+    // often as rxjava, so the versions shouldn't align
+    implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
+
+
     // https://mvnrepository.com/artifact/com.google.android.material/material
     runtimeOnly("com.google.android.material:material:1.5.0")
 

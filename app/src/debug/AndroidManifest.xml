@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        >
+
+    <application>
+        <activity
+                android:name="com.github.sacsar.hellodiceroller.HiltTestActivity"
+                android:exported="true"
+
+                />
+    </application>
+</manifest>

@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("dagger.hilt.android.plugin") // the above plugin are really to get dagger/hilt to work for dependency injection
-    id("com.diffplug.spotless") version "6.4.2"
+    id("com.diffplug.spotless") version "6.5.1"
 }
 
 android {

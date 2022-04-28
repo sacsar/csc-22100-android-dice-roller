@@ -30,6 +30,10 @@ public class DiceRoller extends Fragment {
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     binding = DiceRollerFragmentBinding.inflate(inflater, container, false);
+    // TODO: Handle locale properly -- it should be some sort of application level state
+    // getResources.getConfiguration.locale
+    viewModel.roll().observe(this, roll -> binding.rollResult.setText(String.format("%d", roll)));
+    binding.rollButton.setOnClickListener(l -> viewModel.rollDice());
 
     return binding.getRoot();
   }
@@ -38,5 +42,6 @@ public class DiceRoller extends Fragment {
   public void onDestroyView() {
     super.onDestroyView();
     binding = null;
+    viewModel.cleanup();
   }
 }

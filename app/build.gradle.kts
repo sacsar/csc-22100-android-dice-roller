@@ -86,4 +86,10 @@ spotless {
         // need to explicitly help it find android sources
         target("src/*/java/**/*.java")
     }
+
+    format("xml") {
+        target("src/**/*.xml") // must specify target
+        eclipseWtp(com.diffplug.spotless.extra.wtp.EclipseWtpFormatterStep.XML)
+        ratchetFrom("origin/main")
+    }
 }

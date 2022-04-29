@@ -3,8 +3,17 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/nav_graph"
-            app:startDestination="@id/diceRoller">
+            app:startDestination="@id/main_menu_fragment">
+    <fragment
+            android:id="@+id/main_menu_fragment"
+            android:name="com.github.sacsar.hellodiceroller.mainmenu.MainMenuFragment"
+            android:label="Main Menu"
+            tools:layout="@layout/main_menu_fragment">
 
+        <action
+                android:id="@+id/action_main_menu_recycler_view_to_diceRoller"
+                app:destination="@id/diceRoller"/>
+    </fragment>
     <fragment
             android:id="@+id/FirstFragment"
             android:name="com.github.sacsar.hellodiceroller.FirstFragment"

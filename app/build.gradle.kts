@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("dagger.hilt.android.plugin") // the above plugin are really to get dagger/hilt to work for dependency injection
+    id("androidx.navigation.safeargs")
     id("com.diffplug.spotless") version "6.5.1"
 }
 
@@ -40,6 +41,9 @@ dependencies {
     val lifecycle_version = "2.4.+"
     val nav_version = "2.4.0"
     val hilt_version = "2.41"
+    val auto_value_version = "1.9"
+
+    api("com.google.auto.value:auto-value-annotations:$auto_value_version")
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
@@ -55,16 +59,13 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata:$lifecycle_version")
     implementation("com.google.dagger:hilt-android:$hilt_version")
     annotationProcessor("com.google.dagger:hilt-android-compiler:$hilt_version")
+    annotationProcessor("com.google.auto.value:auto-value:$auto_value_version")
 
     // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxjava
     implementation("io.reactivex.rxjava3:rxjava:3.1.4")
     // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxandroid -- note that rxandroid doesn't release as
     // often as rxjava, so the versions shouldn't align
     implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
-
-
-    // https://mvnrepository.com/artifact/com.google.android.material/material
-    runtimeOnly("com.google.android.material:material:1.5.0")
 
 
     testImplementation("junit:junit:4.+")

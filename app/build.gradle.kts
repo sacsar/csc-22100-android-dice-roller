@@ -37,13 +37,14 @@ android {
 }
 
 dependencies {
-    val fragment_version = "1.4.1"
-    val lifecycle_version = "2.4.+"
-    val nav_version = "2.4.0"
-    val hilt_version = "2.41"
-    val auto_value_version = "1.9"
+    val fragmentVersion = "1.4.1"
+    val lifecycleVersion = "2.4.+"
+    val navVersion = "2.4.0"
+    val hiltVersion = "2.41"
+    val autoValueVersion = "1.9"
+    val roomVersion = "2.4.2"
 
-    api("com.google.auto.value:auto-value-annotations:$auto_value_version")
+    api("com.google.auto.value:auto-value-annotations:$autoValueVersion")
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
@@ -52,14 +53,14 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.3")
-    implementation("androidx.fragment:fragment:$fragment_version")
-    implementation("androidx.navigation:navigation-fragment:$nav_version")
-    implementation("androidx.navigation:navigation-ui:$nav_version")
-    implementation("androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version")
-    implementation("androidx.lifecycle:lifecycle-livedata:$lifecycle_version")
-    implementation("com.google.dagger:hilt-android:$hilt_version")
-    annotationProcessor("com.google.dagger:hilt-android-compiler:$hilt_version")
-    annotationProcessor("com.google.auto.value:auto-value:$auto_value_version")
+    implementation("androidx.fragment:fragment:$fragmentVersion")
+    implementation("androidx.navigation:navigation-fragment:$navVersion")
+    implementation("androidx.navigation:navigation-ui:$navVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-livedata:$lifecycleVersion")
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    annotationProcessor("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    annotationProcessor("com.google.auto.value:auto-value:$autoValueVersion")
 
     // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxjava
     implementation("io.reactivex.rxjava3:rxjava:3.1.4")
@@ -67,13 +68,18 @@ dependencies {
     // often as rxjava, so the versions shouldn't align
     implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
 
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-rxjava3:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
 
     testImplementation("junit:junit:4.13.2")
+    testImplementation("androidx.room:room-testing:$roomVersion")
+
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.fragment:fragment-testing:$fragment_version")
-    androidTestImplementation("com.google.dagger:hilt-android-testing:$hilt_version")
-    androidTestAnnotationProcessor("com.google.dagger:hilt-android-compiler:$hilt_version")
+    androidTestImplementation("androidx.fragment:fragment-testing:$fragmentVersion")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
+    androidTestAnnotationProcessor("com.google.dagger:hilt-android-compiler:$hiltVersion")
 }
 
 spotless {

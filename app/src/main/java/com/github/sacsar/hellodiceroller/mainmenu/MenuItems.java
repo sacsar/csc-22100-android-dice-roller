@@ -10,6 +10,10 @@ import java.util.List;
 @InstallIn(SingletonComponent.class)
 @Module
 public class MenuItems {
+  /**
+   * NOTE: I was hoping that there was a way to extract the menu items from the navigation graph,
+   * but it doesn't seem to be possible. Hence, just hard-coding everything.
+   */
   private static final List<MainMenuItem> menuItems =
       Collections.singletonList(
           MainMenuItem.create(

@@ -68,7 +68,7 @@ dependencies {
     implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
 
 
-    testImplementation("junit:junit:4.+")
+    testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.fragment:fragment-testing:$fragment_version")

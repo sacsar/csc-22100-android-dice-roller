@@ -1,5 +1,6 @@
 package com.github.sacsar.hellodiceroller.mainmenu;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 public class MainMenuAdapter extends ListAdapter<MainMenuItem, MainMenuAdapter.ViewHolder> {
+  private static final String TAG = "MainMenuAdapter";
+
   private final NavController navController;
 
   protected MainMenuAdapter(
@@ -31,6 +34,7 @@ public class MainMenuAdapter extends ListAdapter<MainMenuItem, MainMenuAdapter.V
   @Override
   public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
     MainMenuItem item = getItem(position);
+    Log.i(TAG, String.format("Binding view holder for %s", item));
     holder.binding.menuItemItext.setText(item.displayString());
     holder.itemView.setOnClickListener(l -> navController.navigate(item.menuToTargetAction()));
   }

@@ -1,6 +1,7 @@
 package com.github.sacsar.hellodiceroller.mainmenu;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class MainMenuFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    menuItems.forEach(item -> Log.i(TAG, item.displayString()));
     mainMenuAdapter =
         new MainMenuAdapter(
             new MainMenuAdapter.MenuItemDiff(), NavHostFragment.findNavController(this));
@@ -43,6 +45,7 @@ public class MainMenuFragment extends Fragment {
     recyclerView = binding.mainMenuRecyclerView;
     recyclerView.setAdapter(mainMenuAdapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    Log.i(TAG, String.format("Num menu items: %s", recyclerView.getAdapter().getItemCount()));
     return binding.getRoot();
   }
 

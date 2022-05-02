@@ -3,27 +3,25 @@ package com.github.sacsar.hellodiceroller;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.github.sacsar.hellodiceroller.databinding.ActivityMainBinding;
-import com.google.android.material.snackbar.Snackbar;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
   private AppBarConfiguration appBarConfiguration;
-  private ActivityMainBinding binding;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    binding = ActivityMainBinding.inflate(getLayoutInflater());
+    com.github.sacsar.hellodiceroller.databinding.ActivityMainBinding binding =
+        ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
 
     setSupportActionBar(binding.toolbar);

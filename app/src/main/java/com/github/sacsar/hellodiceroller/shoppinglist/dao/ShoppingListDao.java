@@ -17,9 +17,9 @@ public interface ShoppingListDao {
   @Delete
   Completable delete(ShoppingListItem... items);
 
-  @Query("SELECT * FROM shopping_list_items")
+  @Query("SELECT * FROM shopping_list_items ORDER BY position ASC")
   Flowable<List<ShoppingListItem>> getAllItems();
 
-  @Query("SELECT * FROM shopping_list_items WHERE completed = 0")
+  @Query("SELECT * FROM shopping_list_items WHERE completed = 0 ORDER BY position ASC")
   Flowable<List<ShoppingListItem>> getIncompleteItems();
 }

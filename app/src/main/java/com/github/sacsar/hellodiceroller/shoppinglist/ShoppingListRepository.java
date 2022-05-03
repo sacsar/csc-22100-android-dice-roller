@@ -5,7 +5,11 @@ import com.github.sacsar.hellodiceroller.shoppinglist.dao.ShoppingListDao;
 import com.github.sacsar.hellodiceroller.shoppinglist.model.ShoppingListItem;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.rxjava3.subjects.Subject;
+
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -15,7 +19,9 @@ public class ShoppingListRepository {
 
   private static final String TAG = "ShoppingListRepository";
 
-  @Inject ShoppingListDao dao;
+  private Subject<ShoppingListItem> itemUpdateBus;
+  private ShoppingListDao dao;
+  private Disposable disposable;
 
   public Completable addItem(ShoppingListItem item) {
     return dao.insert(item).subscribeOn(Schedulers.io());
@@ -43,6 +49,26 @@ public class ShoppingListRepository {
     return dao.getIncompleteItems().subscribeOn(Schedulers.io());
   }
 
+  public void updateItem(ShoppingListItem item) {
+    itemUpdateBus.onNext(item);
+  }
+
+  public void updateItems(ShoppingListItem... items) {
+
+  }
+
   @Inject
-  public ShoppingListRepository() {}
+  public ShoppingListRepository(ShoppingListDao dao) {
+    this.dao = dao;
+    this.itemUpdateBus = PublishSubject.create();
+    subscribeToItemUpdates();
+  }
+
+  private void subscribeToItemUpdates() {
+    disposable =
+        itemUpdateBus
+            .distinctUntilChanged()
+            .subscribeOn(Schedulers.io())
+            .subscribe(onNext -> dao.update(onNext).subscribe());
+  }
 }

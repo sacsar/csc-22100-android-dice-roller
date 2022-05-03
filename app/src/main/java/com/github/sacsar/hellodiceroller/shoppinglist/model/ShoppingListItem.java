@@ -39,6 +39,11 @@ public abstract class ShoppingListItem {
     return ShoppingListItem.create(id(), item(), position(), !completed());
   }
 
+  @Ignore
+  public ShoppingListItem withPosition(int i) {
+    return ShoppingListItem.create(id(), item(), i, completed());
+  }
+
   public static ShoppingListItem create(int id, String item, int position, boolean completed) {
     return new AutoValue_ShoppingListItem(id, item, position, completed);
   }

@@ -10,9 +10,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.github.sacsar.hellodiceroller.databinding.ShoppingListFragmentBinding;
+import com.github.sacsar.hellodiceroller.recyclerview.ItemTouchCallback;
 import dagger.hilt.android.AndroidEntryPoint;
 import javax.inject.Inject;
 
@@ -36,6 +38,10 @@ public class ShoppingListFragment extends Fragment {
     recyclerView = binding.shoppingListRecyclerView;
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+    ItemTouchCallback<ShoppingListAdapter> callback = new ItemTouchCallback<>(adapter);
+    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+    itemTouchHelper.attachToRecyclerView(recyclerView);
 
     binding.addItemFab.setOnClickListener(
         l -> {

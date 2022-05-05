@@ -15,7 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.github.sacsar.hellodiceroller.databinding.ShoppingListFragmentBinding;
 import com.github.sacsar.hellodiceroller.recyclerview.ItemTouchCallback;
+import com.github.sacsar.hellodiceroller.shoppinglist.model.ShoppingListItem;
+import com.google.android.material.snackbar.Snackbar;
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+
 import javax.inject.Inject;
 
 @AndroidEntryPoint
@@ -26,14 +31,15 @@ public class ShoppingListFragment extends Fragment {
   private ShoppingListViewModel viewModel;
   @Inject ShoppingListAdapter adapter;
   private RecyclerView recyclerView;
+  private ShoppingListFragmentBinding binding;
+  private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
   @Override
   public View onCreateView(
       @NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    ShoppingListFragmentBinding binding =
-        ShoppingListFragmentBinding.inflate(inflater, container, false);
+    binding = ShoppingListFragmentBinding.inflate(inflater, container, false);
 
     recyclerView = binding.shoppingListRecyclerView;
     recyclerView.setAdapter(adapter);
@@ -67,11 +73,28 @@ public class ShoppingListFragment extends Fragment {
               Log.v(TAG, "Updating shopping list item adapter");
               adapter.submitList(items);
             });
+
+    compositeDisposable.add(viewModel
+        .deletedItem()
+        .subscribe(() -> {
+                Log.v(TAG, "item deleted");
+                displayDeleteSnackbar();
+        }));
+  }
+
+  private void displayDeleteSnackbar() {
+    Log.v(TAG, "display snackbar");
+    Snackbar.make(binding.shoppingListCoordinator, "Deleted", Snackbar.LENGTH_LONG)
+        .setAction(
+            "Undo",
+                view -> viewModel.undelete())
+        .show();
   }
 
   @Override
   public void onDestroyView() {
     super.onDestroyView();
+    compositeDisposable.dispose();
     recyclerView.setAdapter(null);
   }
 }

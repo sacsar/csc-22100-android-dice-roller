@@ -55,9 +55,8 @@ public class ShoppingListAdapter
 
   @Override
   public void onItemDismiss(int position) {
-    // we're deleting an item -- I do want this to come back to the main view model to ask for
-    // confirmation
-    Log.d(TAG, String.format("On item dismiss called for position %s", position));
+    // TODO: Fix the fact we don't update the positions here
+    shoppingListRepository.deleteItem(getItem(position));
   }
 
   @Override

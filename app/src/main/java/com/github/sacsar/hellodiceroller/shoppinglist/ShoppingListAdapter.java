@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import com.github.sacsar.hellodiceroller.databinding.ShoppingListItemBinding;
+import com.github.sacsar.hellodiceroller.recyclerview.WithCommit;
 import com.github.sacsar.hellodiceroller.recyclerview.WithItemDismiss;
 import com.github.sacsar.hellodiceroller.recyclerview.WithItemMove;
 import com.github.sacsar.hellodiceroller.shoppinglist.model.ShoppingListItem;
@@ -23,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 @FragmentScoped
 public class ShoppingListAdapter
     extends ListAdapter<ShoppingListItem, ShoppingListAdapter.ViewHolder>
-    implements WithItemDismiss, WithItemMove {
+    implements WithItemDismiss, WithItemMove, WithCommit {
   private static final String TAG = "ShoppingListAdapter";
 
   private final ShoppingListRepository shoppingListRepository;
@@ -60,36 +61,31 @@ public class ShoppingListAdapter
   }
 
   @Override
-  public void withItemMove(int startPosition, int endPosition) {
+  public void onItemMove(int startPosition, int endPosition) {
+    // Overwhelmingly, we're going to be swapping adjacent positions, I think
     List<ShoppingListItem> currentList = getCurrentList();
-    List<ShoppingListItem> updatedList = new ArrayList<>(currentList.size());
-    ShoppingListItem movedItem = null;
+    List<ShoppingListItem> updatedList = new ArrayList<>(currentList);
     if (startPosition < endPosition) {
-      for (int i = 0; i < currentList.size(); i++) {
-        if (i < startPosition) {
-          updatedList.add(currentList.get(i));
-        } else if (i == startPosition) {
-          movedItem = currentList.get(i).withPosition(endPosition);
-        } else if (i < endPosition) {
-          updatedList.add(currentList.get(i).withPosition(i - 1));
-        } else if (i == endPosition) {
-          updatedList.add(movedItem);
-        } else {
-          updatedList.add(currentList.get(i));
-        }
+      for (int i = startPosition; i < endPosition; i++) {
+        // swap, and then update position field on the item
+        Collections.swap(updatedList, i, i+1);
+        updatedList.set(i, updatedList.get(i).withPosition(i));
       }
-    } else if (startPosition > endPosition) {
-      for (int i = 0; i < currentList.size(); i ++) {
-        if ( i < endPosition) {
-          updatedList.add(currentList.get(i));
-
-        }
-      }
+      updatedList.set(endPosition, updatedList.get(endPosition).withPosition(endPosition));
     } else {
-      updatedList = currentList;
+      for (int i = startPosition; i > endPosition; i--) {
+        Collections.swap(updatedList, i, i-1);
+        updatedList.set(i, updatedList.get(i).withPosition(i));
+      }
+      updatedList.set(endPosition, updatedList.get(endPosition).withPosition(endPosition));
     }
-    submitList(currentList, () -> shoppingListRepository.updateItems());
+    submitList(updatedList);
     Log.d(TAG, String.format("Moving from position %s to position %s", startPosition, endPosition));
+  }
+
+  @Override
+  public void commit() {
+    shoppingListRepository.updateItems(getCurrentList().toArray(new ShoppingListItem[getItemCount()]));
   }
 
   public static class ViewHolder extends RecyclerView.ViewHolder {

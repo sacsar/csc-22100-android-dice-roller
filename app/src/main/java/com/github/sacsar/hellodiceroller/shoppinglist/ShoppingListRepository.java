@@ -5,6 +5,7 @@ import com.github.sacsar.hellodiceroller.shoppinglist.dao.ShoppingListDao;
 import com.github.sacsar.hellodiceroller.shoppinglist.model.ShoppingListItem;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;
@@ -19,7 +20,7 @@ public class ShoppingListRepository {
 
   private static final String TAG = "ShoppingListRepository";
 
-  private Subject<ShoppingListItem> itemUpdateBus;
+  private final Subject<ShoppingListItem> itemUpdateBus;
   private ShoppingListDao dao;
   private Disposable disposable;
 
@@ -54,7 +55,9 @@ public class ShoppingListRepository {
   }
 
   public void updateItems(ShoppingListItem... items) {
-
+    for (ShoppingListItem item : items) {
+      itemUpdateBus.onNext(item);
+    }
   }
 
   @Inject
@@ -67,8 +70,11 @@ public class ShoppingListRepository {
   private void subscribeToItemUpdates() {
     disposable =
         itemUpdateBus
+            // make sure we're off the main thread before we go to the DB (subscribeOn at the end
+            // didn't work)
+            .observeOn(Schedulers.io())
             .distinctUntilChanged()
-            .subscribeOn(Schedulers.io())
-            .subscribe(onNext -> dao.update(onNext).subscribe());
+            .flatMapCompletable(item -> dao.update(item))
+            .subscribe();
   }
 }

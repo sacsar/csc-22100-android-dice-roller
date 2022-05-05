@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 // See
 // https://github.com/iPaulPro/Android-ItemTouchHelper-Demo/blob/d164fba0f27c8aa38cfa7dbd4bc74d53dea44605/app/src/main/java/co/paulburke/android/itemtouchhelperdemo/helper/SimpleItemTouchHelperCallback.java#L34
-public class ItemTouchCallback<T extends RecyclerView.Adapter<?> & WithItemMove & WithItemDismiss>
+public class ItemTouchCallback<T extends RecyclerView.Adapter<?> & WithItemMove & WithItemDismiss & WithCommit>
     extends ItemTouchHelper.SimpleCallback {
 
   private static final String TAG = "ItemTouchCallback";
@@ -37,7 +37,7 @@ public class ItemTouchCallback<T extends RecyclerView.Adapter<?> & WithItemMove 
       Log.d(TAG, "Item move, mismatched view types");
       return false;
     }
-    adapter.withItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+    adapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
     Log.d(TAG, "Item move detected!");
     return true;
   }
@@ -51,9 +51,16 @@ public class ItemTouchCallback<T extends RecyclerView.Adapter<?> & WithItemMove 
   public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
     super.onSelectedChanged(viewHolder, actionState);
     if (actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
-      Log.d(TAG, "Selected changed -- do we trigger this from swipe?"); // Yes, we do
+      if (dragInProgress) {
+        Log.v(TAG, "Drag complete; committing to DB");
+        dragInProgress = false;
+        adapter.commit();
+      }
     } else if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+      Log.v(TAG, "Action state drag");
       dragInProgress = true;
+    } else if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+      Log.v(TAG, "action state swipe");
     }
   }
 }

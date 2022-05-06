@@ -20,7 +20,10 @@ public class MenuItems {
               MainMenuFragmentDirections.actionMainMenuRecyclerViewToDiceRoller(), "Dice Roller"),
           MainMenuItem.create(
               MainMenuFragmentDirections.actionMainMenuFragmentToShoppingListFragment(),
-              "Shopping List"));
+              "Shopping List"),
+          MainMenuItem.create(
+              MainMenuFragmentDirections.actionMainMenuFragmentToStackedFragment(),
+              "StackedView demo"));
 
   @Provides
   List<MainMenuItem> provideMenuItems() {

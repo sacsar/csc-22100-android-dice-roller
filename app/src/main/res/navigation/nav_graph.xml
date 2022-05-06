@@ -15,6 +15,9 @@
 		<action
 			android:id="@+id/action_main_menu_fragment_to_shoppingListFragment"
 			app:destination="@id/shoppingListFragment" />
+		<action
+				android:id="@+id/action_main_menu_fragment_to_stackedFragment"
+				app:destination="@id/stackedFragment"/>
 	</fragment>
 	<fragment android:id="@+id/FirstFragment"
 		android:name="com.github.sacsar.hellodiceroller.FirstFragment"
@@ -54,4 +57,9 @@
 			android:id="@+id/action_shoppingListFragment_to_addItemFragment"
 			app:destination="@id/addItemFragment" />
 	</fragment>
+	<fragment
+			android:id="@+id/stackedFragment"
+			android:name="com.github.sacsar.hellodiceroller.stackview.StackedFragment"
+			android:label="stacked_fragment"
+			tools:layout="@layout/stacked_fragment"/>
 </navigation>

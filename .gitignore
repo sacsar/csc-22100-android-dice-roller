@@ -47,3 +47,4 @@ google-services.json
 .project
 .settings
 /app/.classpath
+.vscode/settings.json

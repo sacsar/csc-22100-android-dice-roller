@@ -20,3 +20,39 @@ buildscript {
 tasks.register<Delete>("clean") {
     delete(rootProject.buildDir)
 }
+
+fun readGitIgnore(): List<String>  {
+    val gitignore = project.projectDir.resolve(".gitignore")
+    if (gitignore.exists()) {
+       return gitignore.readLines().filterNot { line ->
+            line.startsWith("#") || line.isBlank()
+        }
+    }
+    return listOf()
+}
+
+tasks.register<Zip>("packageProject") {
+    archiveFileName.set("${project.name}.zip")
+    destinationDirectory.set(project.projectDir)
+
+    from(project.layout.projectDirectory) {
+        include("**/*.gradle.kts")
+        include("*.gradle")
+        include("gradle/**")
+        include("gradlew*")
+        include("**/src/**")
+        include("proguard-rules.pro")
+        include("gradle.properties")
+
+        exclude("**/build")
+
+        // additionally, exclude whatever was in .gitignore
+        readGitIgnore().forEach{ ex ->
+            exclude(ex)
+        }
+
+        into(project.name)
+    }
+
+    outputs.upToDateWhen{false}
+}

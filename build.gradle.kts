@@ -8,7 +8,7 @@ buildscript {
     val kotlin_version = "1.6.21"
 
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.+")
+        classpath("com.android.tools.build:gradle:7.1.3")
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.42")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.4.2")

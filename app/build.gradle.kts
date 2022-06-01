@@ -66,7 +66,7 @@ dependencies {
     annotationProcessor("com.google.auto.value:auto-value:$autoValueVersion")
 
     // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxjava
-    implementation("io.reactivex.rxjava3:rxjava:3.1.4")
+    implementation("io.reactivex.rxjava3:rxjava:3.1.5")
     // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxandroid -- note that rxandroid doesn't release as
     // often as rxjava, so the versions shouldn't align
     implementation("io.reactivex.rxjava3:rxandroid:3.0.0")

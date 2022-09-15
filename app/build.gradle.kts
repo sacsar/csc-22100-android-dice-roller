@@ -40,7 +40,7 @@ dependencies {
     val fragmentVersion = "1.4.1"
     val lifecycleVersion = "2.4.+"
     val navVersion = "2.4.0"
-    val hiltVersion = "2.42"
+    val hiltVersion = "2.43.2"
     val autoValueVersion = "1.9"
     val roomVersion = "2.4.2"
 

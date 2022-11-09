@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
 
-    val kotlin_version = "1.7.10"
+    val kotlin_version = "1.7.21"
 
     dependencies {
         classpath("com.android.tools.build:gradle:7.2.2")
